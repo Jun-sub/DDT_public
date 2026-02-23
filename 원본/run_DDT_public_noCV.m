@@ -8,26 +8,19 @@ clear; clc; close all
 %% Configuration
 
 % Data
-    % txt data load and modification into DDT code accesible form
-    filepath = "G:\공유 드라이브\Battery Software Group (2025)\Members\김준섭\논문 작업\MIT\EIS Data for Juhyun\EIS Data for Juhyun\DRTsplit_zcycle 2-4.1\251025 4.2mg SJ4C cycling eis 2 to 4.1 three electrodes re_C01_zcycle0.txt";
 
-    % % Data path and name
-    % filename_data = 'SiNW_data.mat';
+    % Data path and name
+    filename_data = 'SiNW_data.mat';
     
     % Load data (see "code_to_load_data_and_hyperparameters_other_concentrations.txt" for other data set)
-    % data = load(filename_data);    
-    data = DDT_data_preprocessing(filepath);
-
-        % w_data= data.w_1274; % frequency data (vector) [Rad/sec]
-        % z_data = data.z_1274; % impedance data (vector, complex) [Ohm]
-
-        w_data= data.w; % frequency data (vector) [Rad/sec]
-        z_data = data.z; % impedance data (vector, complex) [Ohm]
-        n_begin = 71; % index of the first data point to include in DDT analysis (only include the diffusion part)
-        n_end = 81; % index of the last data point to include 
+    data = load(filename_data);    
+        w_data= data.w_1274; % frequency data (vector) [Rad/sec]
+        z_data = data.z_1274; % impedance data (vector, complex) [Ohm]
+        n_begin = 40; % index of the first data point to include in DDT analysis (only include the diffusion part)
+        n_end = 57; % index of the last data point to include 
 
    % hyperparameters
-        R_star = 112; % real-axis intercept of diffusion impedance, predetermined [ohm] 4.46
+        R_star = 4.46; % real-axis intercept of diffusion impedance, predetermined [ohm]
         l_star = -1;  % regularization parameter (lambda), log scale, predetermined    
         t_lb = 0; % time scale to include in DDT analysis, lower limit, log scale
         t_ub = 5; % time scale to include in DDT analysis, upper limit, log scale  
@@ -49,8 +42,7 @@ clear; clc; close all
     figure(1);
     hold on;
     plot(real(z_data),-imag(z_data),'ko')
-    % axis([0,7,0,7])
-    axis equal
+    axis([0,7,0,7])
     xlabel('Z_{re} [Ohm]')
     ylabel('-Z_{im} [Ohm]')
     legend_fig1{1} = 'exp data';
